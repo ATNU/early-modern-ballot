@@ -1,0 +1,15 @@
+a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.background {
+  position: relative;
+  margin: 25px auto;
+  width: 1000px;
+  height: 1460px;
+  background-image: url('/assets/img/background.png');
+  background-position: center center;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
+}
