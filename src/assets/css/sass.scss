@@ -5,11 +5,165 @@ a {
 }
 
 .background {
-  position: relative;
   margin: 25px auto;
   width: 1000px;
-  height: 1460px;
+  height: 1420px;
   background-image: url('/assets/img/background.png');
   background-position: center center;
+  background-repeat: no-repeat;
   box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
+}
+
+.characters, .objects {
+  position: relative;
+
+  .character, .object {
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+}
+
+.characters {
+  .character {
+    &.strategus {
+      background-image: url('/assets/img/strategus.png');
+      width: 76px;
+      height: 119px;
+      top: 63px;
+      left: 428px;
+    }
+
+    &.orator {
+      background-image: url('/assets/img/orator.png');
+      width: 85px;
+      height: 119px;
+      top: 61px;
+      left: 523px;
+    }
+
+    &.great-seal {
+      background-image: url('/assets/img/great-seal.png');
+      width: 164px;
+      height: 80px;
+      top: 120px;
+      left: 200px;
+    }
+
+    &.treasury {
+      background-image: url('/assets/img/treasury.png');
+      width: 157px;
+      height: 87px;
+      top: 107px;
+      left: 700px;
+    }
+
+    &.secretaries-left {
+      background-image: url('/assets/img/secretaries-left.png');
+      width: 125px;
+      height: 128px;
+      top: 228px;
+      left: 160px;
+    }
+
+    &.secretaries-right {
+      background-image: url('/assets/img/secretaries-right.png');
+      width: 128px;
+      height: 132px;
+      top: 217px;
+      left: 712px;
+    }
+
+    &.acting-censor {
+      background-image: url('/assets/img/acting-censor.png');
+      width: 101px;
+      height: 136px;
+      top: 334px;
+      left: 450px;
+    }
+
+    &.censor-left {
+      background-image: url('/assets/img/censor-left.png');
+      width: 65px;
+      height: 66px;
+      top: 336px;
+      left: 300px;
+    }
+
+    &.censor-right {
+      background-image: url('/assets/img/censor-right.png');
+      width: 55px;
+      height: 70px;
+      top: 330px;
+      left: 648px;
+    }
+
+    &.tribunes-of-the-horse {
+      background-image: url('/assets/img/tribunes-of-the-horse.png');
+      width: 83px;
+      height: 108px;
+      top: 584px;
+      left: 268px;
+    }
+
+    &.tribunes-of-the-foot {
+      background-image: url('/assets/img/tribunes-of-the-foot.png');
+      width: 92px;
+      height: 98px;
+      top: 584px;
+      left: 648px;
+    }
+
+    &.judges-left {
+      background-image: url('/assets/img/judges-left.png');
+      width: 90px;
+      height: 240px;
+      top: 675px;
+      left: 260px;
+    }
+
+    &.judges-right {
+      background-image: url('/assets/img/judges-right.png');
+      width: 88px;
+      height: 258px;
+      top: 673px;
+      left: 649px;
+    }
+
+    &.page-left {
+      background-image: url('/assets/img/page-left.png');
+      width: 191px;
+      height: 246px;
+      top: 1168px;
+      left: 50px;
+    }
+
+    &.page-right {
+      background-image: url('/assets/img/page-right.png');
+      width: 144px;
+      height: 246px;
+      top: 1166px;
+      left: 794px;
+    }
+  }
+
+.objects {
+  .object {
+    &.bowl-left {
+      background-image: url('/assets/img/bowl-left.png');
+      width: 157px;
+      height: 87px;
+      top: 127px;
+      left: 700px;
+    }
+
+    &.bowl-right {
+      background-image: url('/assets/img/bowl-right.png');
+      width: 157px;
+      height: 87px;
+      top: 127px;
+      left: 700px;
+    }
+  }
+}
 }
