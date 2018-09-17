@@ -16,11 +16,7 @@ import scss from '../css/sass.scss';
 // import Js Plugins/Entities
 
 //ES6 Module
-import Bar1 from './entities/Bar1';
-import Howler from 'howler';
-//CommonJS
-var Bar2 = require('./entities/Bar2');
-
+import Lot from './lot';
 
 window.h5 = {
     isPc: function() {
@@ -105,6 +101,7 @@ window.h5 = {
 };
 window.onload = function() {
     window.h5.init();
+    Lot();
 };
 
 //Stats JavaScript Performance Monitor
