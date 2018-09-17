@@ -6,8 +6,8 @@ a {
 
 .background {
   margin: 25px auto;
-  width: 1000px;
-  height: 1420px;
+  width: 704px;
+  height: 1000px;
   background-image: url('/assets/img/background.png');
   background-position: center center;
   background-repeat: no-repeat;
@@ -26,144 +26,248 @@ a {
 
 .characters {
   .character {
-    &.strategus {
-      background-image: url('/assets/img/strategus.png');
-      width: 76px;
-      height: 119px;
-      top: 63px;
-      left: 428px;
-    }
-
-    &.orator {
-      background-image: url('/assets/img/orator.png');
-      width: 85px;
-      height: 119px;
-      top: 61px;
-      left: 523px;
-    }
-
-    &.great-seal {
-      background-image: url('/assets/img/great-seal.png');
-      width: 164px;
-      height: 80px;
-      top: 120px;
-      left: 200px;
-    }
-
-    &.treasury {
-      background-image: url('/assets/img/treasury.png');
-      width: 157px;
-      height: 87px;
-      top: 107px;
-      left: 700px;
-    }
-
-    &.secretaries-left {
-      background-image: url('/assets/img/secretaries-left.png');
-      width: 125px;
-      height: 128px;
-      top: 228px;
-      left: 160px;
-    }
-
-    &.secretaries-right {
-      background-image: url('/assets/img/secretaries-right.png');
-      width: 128px;
-      height: 132px;
-      top: 217px;
-      left: 712px;
-    }
-
     &.acting-censor {
       background-image: url('/assets/img/acting-censor.png');
-      width: 101px;
-      height: 136px;
-      top: 334px;
-      left: 450px;
+      width: 72px;
+      height: 97px;
+      top: 244px;
+      left: 369px;
     }
 
     &.censor-left {
       background-image: url('/assets/img/censor-left.png');
-      width: 65px;
-      height: 66px;
-      top: 336px;
-      left: 300px;
+      width: 47px;
+      height: 46px;
+      top: 250px;
+      left: 218px;
     }
 
     &.censor-right {
       background-image: url('/assets/img/censor-right.png');
-      width: 55px;
-      height: 70px;
-      top: 330px;
-      left: 648px;
+      width: 40px;
+      height: 59px;
+      top: 233px;
+      left: 466px;
     }
 
-    &.tribunes-of-the-horse {
-      background-image: url('/assets/img/tribunes-of-the-horse.png');
-      width: 83px;
-      height: 108px;
-      top: 584px;
-      left: 268px;
+    &.elector-center {
+      background-image: url('/assets/img/elector-center.png');
+      width: 42px;
+      height: 56px;
+      top: 179px;
+      left: 338px;
     }
 
-    &.tribunes-of-the-foot {
-      background-image: url('/assets/img/tribunes-of-the-foot.png');
-      width: 92px;
-      height: 98px;
-      top: 584px;
-      left: 648px;
+    &.elector-left {
+      background-image: url('/assets/img/elector-left.png');
+      width: 37px;
+      height: 55px;
+      top: 179px;
+      left: 312px;
+    }
+
+    &.elector-right {
+      background-image: url('/assets/img/elector-right.png');
+      width: 36px;
+      height: 55px;
+      top: 179px;
+      left: 377px;
+    }
+
+    &.great-seal {
+      background-image: url('/assets/img/great-seal.png');
+      width: 116px;
+      height: 57px;
+      top: 85px;
+      left: 122px;
     }
 
     &.judges-left {
       background-image: url('/assets/img/judges-left.png');
-      width: 90px;
-      height: 240px;
-      top: 675px;
-      left: 260px;
+      width: 63px;
+      height: 169px;
+      top: 485px;
+      left: 190px;
     }
 
     &.judges-right {
       background-image: url('/assets/img/judges-right.png');
-      width: 88px;
-      height: 258px;
-      top: 673px;
-      left: 649px;
+      width: 63px;
+      height: 182px;
+      top: 473px;
+      left: 456px;
+    }
+
+    &.orator {
+      background-image: url('/assets/img/orator.png');
+      width: 60px;
+      height: 84px;
+      top: 43px;
+      left: 368px;
     }
 
     &.page-left {
       background-image: url('/assets/img/page-left.png');
-      width: 191px;
-      height: 246px;
-      top: 1168px;
-      left: 50px;
+      width: 133px;
+      height: 173px;
+      top: 823px;
+      left: 34px;
     }
 
     &.page-right {
       background-image: url('/assets/img/page-right.png');
-      width: 144px;
-      height: 246px;
-      top: 1166px;
-      left: 794px;
+      width: 101px;
+      height: 173px;
+      top: 822px;
+      left: 563px;
+    }
+
+    &.secretaries-left {
+      background-image: url('/assets/img/secretaries-left.png');
+      width: 88px;
+      height: 90px;
+      top: 160px;
+      left: 112px;
+    }
+
+    &.secretaries-right {
+      background-image: url('/assets/img/secretaries-right.png');
+      width: 89px;
+      height: 93px;
+      top: 152px;
+      left: 501px;
+    }
+
+    &.senator {
+      background-image: url('/assets/img/senator.png');
+      width: 37px;
+      height: 67px;
+      top: 350px;
+      left: 509px;
+    }
+
+    &.senator-discarding {
+      background-image: url('/assets/img/senator-discarding.png');
+      width: 85px;
+      height: 83px;
+      top: 323px;
+      left: 300px;
+    }
+
+    &.senator-drawing {
+      background-image: url('/assets/img/senator-drawing.png');
+      width: 88px;
+      height: 91px;
+      top: 267px;
+      left: 297px;
+    }
+
+    &.senator-elected {
+      background-image: url('/assets/img/senator-elected.png');
+      width: 34px;
+      height: 61px;
+      top: 206px;
+      left: 428px;
+    }
+
+    &.senators-drawing-left {
+      background-image: url('/assets/img/senators-drawing-left.png');
+      width: 87px;
+      height: 88px;
+      top: 271px;
+      left: 197px;
+    }
+
+    &.senators-drawing-right {
+      background-image: url('/assets/img/senators-drawing-right.png');
+      width: 37px;
+      height: 81px;
+      top: 269px;
+      left: 468px;
+    }
+
+    &.strategus {
+      background-image: url('/assets/img/strategus.png');
+      width: 54px;
+      height: 85px;
+      top: 44px;
+      left: 301px;
+    }
+
+    &.treasury {
+      background-image: url('/assets/img/treasury.png');
+      width: 112px;
+      height: 62px;
+      top: 75px;
+      left: 495px;
+    }
+
+    &.tribunes-foot {
+      background-image: url('/assets/img/tribunes-foot.png');
+      width: 63px;
+      height: 70px;
+      top: 412px;
+      left: 455px;
+    }
+
+    &.tribunes-horse {
+      background-image: url('/assets/img/tribunes-horse.png');
+      width: 58px;
+      height: 76px;
+      top: 418px;
+      left: 191px;
     }
   }
+}
 
 .objects {
   .object {
     &.bowl-left {
       background-image: url('/assets/img/bowl-left.png');
-      width: 157px;
-      height: 87px;
-      top: 127px;
-      left: 700px;
+      width: 33px;
+      height: 56px;
+      top: 173px;
+      left: 196px;
     }
 
     &.bowl-right {
       background-image: url('/assets/img/bowl-right.png');
-      width: 157px;
-      height: 87px;
-      top: 127px;
-      left: 700px;
+      width: 52px;
+      height: 59px;
+      top: 165px;
+      left: 453px;
+    }
+
+    &.side-urn-left {
+      background-image: url('/assets/img/side-urn-left.png');
+      width: 87px;
+      height: 88px;
+      top: 274px;
+      left: 200px;
+    }
+
+    &.side-urn-right {
+      background-image: url('/assets/img/side-urn-right.png');
+      width: 35px;
+      height: 73px;
+      top: 285px;
+      left: 440px;
+    }
+
+    &.electors-bench {
+      background-image: url('/assets/img/electors-bench.png');
+      width: 138px;
+      height: 28px;
+      top: 215px;
+      left: 288px;
+    }
+
+    &.middle-urn {
+      background-image: url('/assets/img/middle-urn.png');
+      width: 30px;
+      height: 83px;
+      top: 280px;
+      left: 356px;
     }
   }
-}
 }
