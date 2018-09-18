@@ -16,6 +16,7 @@ import scss from '../css/sass.scss';
 // import Js Plugins/Entities
 
 //ES6 Module
+import _ from 'lodash';
 import Lot from './lot';
 import Nomination from './nomination';
 import Suffrage from './suffrage';
@@ -23,7 +24,7 @@ import Suffrage from './suffrage';
 window.h5 = {
     isPc: function() {
         var userAgentInfo = navigator.userAgent;
-        var Agents = new Array('Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod');
+        var Agents = Array('Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod');
         var flag = true;
         for (var v = 0; v < Agents.length; v++) {
             if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
@@ -109,5 +110,5 @@ window.onload = function() {
 
     let electors = Lot(offices, senators);
 
-    console.log(electors);
+    let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
 };
