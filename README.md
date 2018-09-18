@@ -52,7 +52,7 @@ The two side urns give access to the centre urn. The centre urn decides the elec
 * The number of Gold balls at the centre is equal to `n` Electors;
 * The number of Silver balls at the centre is equal to `50-n` GoldBallsCentre;
 * The number of Gold balls at either side is equal to `n` GoldBallsCentre;
-* The number of Silver balls at either side is equal to `n` Senators / `2-n` GoldBallsSide
+* The number of Silver balls at either side is equal to `(n Senators / 2) - (n GoldBallsSide)`
             
 A small lot decides the order of approach to the side urns
 
