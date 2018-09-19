@@ -106,9 +106,15 @@ window.onload = function() {
     window.h5.init();
 
     let offices = ['Strategus', 'Orator', '3rd commissioner of the Seal', '3rd commissioner of the Treasury', '1st Censor', '2nd Censor'],
-        senators = 200;
+        senators = [];
+
+    for(let i=0; i<200; i++){
+        senators.push('Senator ' + i);
+    }
 
     let electors = Lot(offices, senators);
 
     let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
+
+    let result = Suffrage(nominations, senators);
 };

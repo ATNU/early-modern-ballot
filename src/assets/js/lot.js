@@ -8,18 +8,23 @@ let centerUrn,
 
 export default function Lot(offices, senators) {
 
+    let centerUrn = {
+        goldBalls: 4 * offices.length,
+        silverBalls: 50 - (4 * offices.length)
+    };
+
     let urns = {
             center: {
-                goldBalls: 4 * offices.length,
-                silverBalls: 50 - (4 * offices.length),
+                goldBalls: centerUrn.goldBalls,
+                silverBalls: centerUrn.silverBalls
             },
             left: {
-                goldBalls: 4 * offices.length,
-                silverBalls: (senators / 2 ) - (4 * offices.length)
+                goldBalls: (centerUrn.goldBalls + centerUrn.silverBalls) / 2,
+                silverBalls: (senators.length / 2 ) - (centerUrn.goldBalls + centerUrn.silverBalls) / 2
             },
             right: {
-                goldBalls: 4 * offices.length,
-                silverBalls: ( senators / 2 ) - (4 * offices.length)
+                goldBalls: (centerUrn.goldBalls + centerUrn.silverBalls) / 2,
+                silverBalls: ( senators.length / 2 ) - (centerUrn.goldBalls + centerUrn.silverBalls) / 2
             }
         };
 
@@ -29,7 +34,7 @@ export default function Lot(offices, senators) {
 
     mixBalls(urns);
 
-    for (let i = 0; i < senators; i++) {
+    for (let i = 0; i < senators.length; i++) {
 
         let firstDraw = null;
 
@@ -41,7 +46,7 @@ export default function Lot(offices, senators) {
         }
 
         if(firstDraw === 'gold' && drawBall('center') === 'gold'){
-            electors.push('Senator ' + (i + 1));
+            electors.push(senators[i]);
         }
         else {
             //Return to seat
