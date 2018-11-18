@@ -16,6 +16,7 @@ import scss from '../css/sass.scss';
 // import Js Plugins/Entities
 
 //ES6 Module
+import $ from 'jquery';
 import _ from 'lodash';
 import Lot from './lot';
 import Nomination from './nomination';
@@ -106,10 +107,41 @@ window.onload = function() {
     window.h5.init();
 
     let offices = ['Strategus', 'Orator', '3rd commissioner of the Seal', '3rd commissioner of the Treasury', '1st Censor', '2nd Censor'],
-        senators = [];
+        senators = [],
+        side = 'left',
+        row = 'row-4',
+        seat = 312;
 
     for(let i=0; i<200; i++){
+
+        if(i === 25 || i === 125 ){
+            row = 'row-3';
+            seat = 308;
+        }
+
+        if(i === 50 || i === 150 ){
+            row = 'row-2';
+            seat = 302;
+        }
+
+        if(i === 75 || i === 175 ){
+            row = 'row-1';
+            seat = 308;
+        }
+
+        if(i === 100){
+            side = 'right';
+            row = 'row-4';
+            seat = 296;
+        }
+
+        seat = seat + 16;
+
         senators.push('Senator ' + i);
+
+        let senatorDiv = '<div id="senator-' + i + '" class="benched-senator ' + row + ' ' + side + '" style="top: ' + seat + 'px"></div>';
+
+        $('#benches').append(senatorDiv);
     }
 
     let electors = Lot(offices, senators);
