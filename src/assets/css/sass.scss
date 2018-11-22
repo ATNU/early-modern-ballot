@@ -56,6 +56,7 @@ a {
       height: 56px;
       top: 179px;
       left: 338px;
+      display: none;
     }
 
     &.elector-left {
@@ -64,6 +65,7 @@ a {
       height: 55px;
       top: 179px;
       left: 312px;
+      display: none;
     }
 
     &.elector-right {
@@ -72,6 +74,7 @@ a {
       height: 55px;
       top: 179px;
       left: 377px;
+      display: none;
     }
 
     &.great-seal {
@@ -144,6 +147,7 @@ a {
       height: 67px;
       top: 350px;
       left: 509px;
+      display: none;
     }
 
     &.senator-discarding {
@@ -152,6 +156,7 @@ a {
       height: 83px;
       top: 323px;
       left: 300px;
+      display: none;
     }
 
     &.senator-drawing {
@@ -160,6 +165,7 @@ a {
       height: 91px;
       top: 267px;
       left: 297px;
+      display: none;
     }
 
     &.senator-elected {
@@ -168,6 +174,7 @@ a {
       height: 61px;
       top: 206px;
       left: 428px;
+      display: none;
     }
 
     &.senators-drawing-left {
@@ -176,6 +183,7 @@ a {
       height: 88px;
       top: 271px;
       left: 197px;
+      display: none;
     }
 
     &.senators-drawing-right {
@@ -184,6 +192,7 @@ a {
       height: 81px;
       top: 269px;
       left: 468px;
+      display: none;
     }
 
     &.strategus {
@@ -319,5 +328,20 @@ a {
       }
     }
     
+  }
+}
+
+#feedback {
+  position: absolute;
+  width: 200px;
+  height: 120px;
+  top: 885px;
+  left: 300px;
+
+  p {
+    font-size: 11px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    line-height: 16px;
   }
 }

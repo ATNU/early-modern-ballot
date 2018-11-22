@@ -144,9 +144,18 @@ window.onload = function() {
         $('#benches').append(senatorDiv);
     }
 
+    window.timer = 0;
+
     let electors = Lot(offices, senators);
 
-    let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
+    setInterval(function(){
+        let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
 
-    let result = Suffrage(nominations, senators);
+        setInterval(function(){
+            let result = Suffrage(nominations, senators);
+        }, 30000);
+
+    }, 200000);
+
+    
 };

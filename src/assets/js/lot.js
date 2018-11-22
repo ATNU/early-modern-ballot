@@ -1,6 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
+import $ from 'jquery';
 
 let centerUrn,
     leftUrn,
@@ -30,30 +31,97 @@ export default function Lot(offices, senators) {
 
     let smallLot = ['inner-top', 'inner-bottom', 'outer-top', 'outer-bottom'];
 
-    let electors = [];
+    let electors = [],
+        interval = 0;
 
     mixBalls(urns);
 
     for (let i = 0; i < senators.length; i++) {
 
-        let firstDraw = null;
+        setTimeout(function(){
+            let firstDraw = null,
+                message = '';
 
-        if(i % 2 === 0){
-            firstDraw = drawBall('left');
-        }
-        else {
-            firstDraw = drawBall('right');
-        }
+            $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'none');
 
-        if(firstDraw === 'gold' && drawBall('center') === 'gold'){
-            electors.push(senators[i]);
-        }
-        else {
-            //Return to seat
+            setTimeout(function(){
+                if(i % 2 === 0){
+                    firstDraw = drawBall('left');
+                    $('.senators-drawing-left').css('display', 'block');
+                    message = senators[i] + ' drew a ' + firstDraw + ' ball from the left urn';
+                }
+                else {
+                    firstDraw = drawBall('right');
+                    $('.senators-drawing-right').css('display', 'block');
+                    message = senators[i] + ' drew a ' + firstDraw + ' ball from the right urn';
+                }
+
+                if(firstDraw === 'gold'){
+                    $('.senator-drawing').css('display', 'block');
+                }
+            }, 500);
+
+            setTimeout(function(){
+                if(firstDraw === 'gold' && drawBall('center') === 'gold'){
+                    $('.senator-elected').css('display', 'block');
+                    $('.senator-drawing').css('display', 'none');
+                    message += ' and drew a gold ball from the center urn.';
+                    electors.push(senators[i]);
+                }
+                else if(firstDraw === 'gold' && drawBall('center') === 'silver'){
+                    $('.senator-discarding').css('display', 'block');
+                    $('.senator-drawing').css('display', 'none');
+                    message += ' and drew a silver ball from the center urn.';
+                    $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
+                }
+                else {
+                    message += '.';
+                    $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
+                }
+
+                $('#feedback').html('<p>' + message + '</p>');
+            }, 1500);
+
+            setTimeout(function(){
+                $('.senator-elected').css('display', 'none');
+                $('.senator-discarding').css('display', 'none');
+                $('.senator-drawing').css('display', 'none');
+                $('.senators-drawing-left').css('display', 'none');
+                $('.senators-drawing-right').css('display', 'none');
+                $('#feedback').html('');
+            }, 2500);
+
+            // $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'none');
+
+            // if(i % 2 === 0){
+            //     firstDraw = drawBall('left');
+            //     message = senators[i] + ' drew a ' + firstDraw + ' ball from the left urn';
+            // }
+            // else {
+            //     firstDraw = drawBall('right');
+            //     message = senators[i] + ' drew a ' + firstDraw + ' ball from the right urn';
+            // }
+
+            // if(firstDraw === 'gold' && drawBall('center') === 'gold'){
+            //     message += ' and drew a gold ball from the center urn.';
+            //     electors.push(senators[i]);
+            // }
+            // else if(firstDraw === 'gold' && drawBall('center') === 'silver'){
+            //     message += ' and drew a silver ball from the center urn.';
+            //     $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
+            // }
+            // else {
+            //     message += '.';
+            //     $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
+            // }
+
+            // $('#feedback').html('<p>' + message + '</p>');
+        }, i * 3000);
+        
+        if(i === senators.length-1){
+            return electors;
         }
     }
-
-    return electors;
 }
 
 function mixBalls(urns){
