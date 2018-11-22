@@ -149,6 +149,9 @@ window.onload = function() {
     let electors = Lot(offices, senators);
 
     setInterval(function(){
+
+        console.log(electors);
+
         let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
 
         setInterval(function(){

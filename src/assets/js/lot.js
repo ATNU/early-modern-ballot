@@ -42,80 +42,54 @@ export default function Lot(offices, senators) {
             let firstDraw = null,
                 message = '';
 
-            $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'none');
+            $('#' + senators[i].replace(' ', '-').toLowerCase()).fadeOut(500);
 
             setTimeout(function(){
                 if(i % 2 === 0){
                     firstDraw = drawBall('left');
-                    $('.senators-drawing-left').css('display', 'block');
+                    $('.senators-drawing-left').fadeIn(250);
                     message = senators[i] + ' drew a ' + firstDraw + ' ball from the left urn';
                 }
                 else {
                     firstDraw = drawBall('right');
-                    $('.senators-drawing-right').css('display', 'block');
+                    $('.senators-drawing-right').fadeIn(250);
                     message = senators[i] + ' drew a ' + firstDraw + ' ball from the right urn';
                 }
 
                 if(firstDraw === 'gold'){
-                    $('.senator-drawing').css('display', 'block');
+                    $('.senator-drawing').fadeIn(500);
                 }
             }, 500);
 
             setTimeout(function(){
                 if(firstDraw === 'gold' && drawBall('center') === 'gold'){
-                    $('.senator-elected').css('display', 'block');
-                    $('.senator-drawing').css('display', 'none');
+                    $('.senator-elected').fadeIn(250);
+                    $('.senator-drawing').fadeOut(250);
                     message += ' and drew a gold ball from the center urn.';
                     electors.push(senators[i]);
                 }
                 else if(firstDraw === 'gold' && drawBall('center') === 'silver'){
-                    $('.senator-discarding').css('display', 'block');
-                    $('.senator-drawing').css('display', 'none');
+                    $('.senator-discarding').fadeIn(250);
+                    $('.senator-drawing').fadeOut(250);
                     message += ' and drew a silver ball from the center urn.';
-                    $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
+                    $('#' + senators[i].replace(' ', '-').toLowerCase()).fadeIn(250);
                 }
                 else {
                     message += '.';
-                    $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
+                    $('#' + senators[i].replace(' ', '-').toLowerCase()).fadeIn(250);
                 }
 
                 $('#feedback').html('<p>' + message + '</p>');
             }, 1500);
 
             setTimeout(function(){
-                $('.senator-elected').css('display', 'none');
-                $('.senator-discarding').css('display', 'none');
-                $('.senator-drawing').css('display', 'none');
-                $('.senators-drawing-left').css('display', 'none');
-                $('.senators-drawing-right').css('display', 'none');
+                $('.senator-elected').fadeOut(250);
+                $('.senator-discarding').fadeOut(250);
+                $('.senator-drawing').fadeOut(250);
+                $('.senators-drawing-left').fadeOut(250);
+                $('.senators-drawing-right').fadeOut(250);
                 $('#feedback').html('');
             }, 2500);
-
-            // $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'none');
-
-            // if(i % 2 === 0){
-            //     firstDraw = drawBall('left');
-            //     message = senators[i] + ' drew a ' + firstDraw + ' ball from the left urn';
-            // }
-            // else {
-            //     firstDraw = drawBall('right');
-            //     message = senators[i] + ' drew a ' + firstDraw + ' ball from the right urn';
-            // }
-
-            // if(firstDraw === 'gold' && drawBall('center') === 'gold'){
-            //     message += ' and drew a gold ball from the center urn.';
-            //     electors.push(senators[i]);
-            // }
-            // else if(firstDraw === 'gold' && drawBall('center') === 'silver'){
-            //     message += ' and drew a silver ball from the center urn.';
-            //     $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
-            // }
-            // else {
-            //     message += '.';
-            //     $('#' + senators[i].replace(' ', '-').toLowerCase()).css('display', 'block');
-            // }
-
-            // $('#feedback').html('<p>' + message + '</p>');
         }, i * 3000);
         
         if(i === senators.length-1){
