@@ -108,34 +108,34 @@ window.onload = function() {
 
     let offices = ['Strategus', 'Orator', '3rd commissioner of the Seal', '3rd commissioner of the Treasury', '1st Censor', '2nd Censor'],
         senators = [],
-        side = 'left',
+        side = 'right',
         row = 'row-4',
         seat = 312;
 
     for(let i=0; i<200; i++){
 
-        if(i === 25 || i === 125 ){
+        if(i % 2 === 0){
+            side = 'left';
+        }
+        else {
+            seat = seat + 16;
+            side = 'right';
+        }
+
+        if(i === 50){
             row = 'row-3';
             seat = 308;
         }
 
-        if(i === 50 || i === 150 ){
+        if(i === 100){
             row = 'row-2';
             seat = 302;
         }
 
-        if(i === 75 || i === 175 ){
+        if(i === 150 ){
             row = 'row-1';
             seat = 308;
-        }
-
-        if(i === 100){
-            side = 'right';
-            row = 'row-4';
-            seat = 296;
-        }
-
-        seat = seat + 16;
+        } 
 
         senators.push('Senator ' + i);
 
