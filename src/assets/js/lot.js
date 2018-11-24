@@ -5,7 +5,9 @@ import $ from 'jquery';
 
 let centerUrn,
     leftUrn,
-    rightUrn;
+    rightUrn,
+    electors = [],
+    speed = 3000;
 
 export default function Lot(offices, senators) {
 
@@ -36,66 +38,93 @@ export default function Lot(offices, senators) {
 
     mixBalls(urns);
 
-    for (let i = 0; i < senators.length; i++) {
-
-        setTimeout(function(){
-            let firstDraw = null,
-                message = '';
-
-            $('#' + senators[i].replace(' ', '-').toLowerCase()).fadeOut(500);
-
-            setTimeout(function(){
-                if(i % 2 === 0){
-                    firstDraw = drawBall('left');
-                    $('.senators-drawing-left').fadeIn(250);
-                    message = senators[i] + ' drew a ' + firstDraw + ' ball from the left urn';
-                }
-                else {
-                    firstDraw = drawBall('right');
-                    $('.senators-drawing-right').fadeIn(250);
-                    message = senators[i] + ' drew a ' + firstDraw + ' ball from the right urn';
-                }
-
-                if(firstDraw === 'gold'){
-                    $('.senator-drawing').fadeIn(500);
-                }
-            }, 500);
-
-            setTimeout(function(){
-                if(firstDraw === 'gold' && drawBall('center') === 'gold'){
-                    $('.senator-elected').fadeIn(250);
-                    $('.senator-drawing').fadeOut(250);
-                    message += ' and drew a gold ball from the center urn.';
-                    electors.push(senators[i]);
-                }
-                else if(firstDraw === 'gold' && drawBall('center') === 'silver'){
-                    $('.senator-discarding').fadeIn(250);
-                    $('.senator-drawing').fadeOut(250);
-                    message += ' and drew a silver ball from the center urn.';
-                    $('#' + senators[i].replace(' ', '-').toLowerCase()).fadeIn(250);
-                }
-                else {
-                    message += '.';
-                    $('#' + senators[i].replace(' ', '-').toLowerCase()).fadeIn(250);
-                }
-
-                $('#feedback').html('<p>' + message + '</p>');
-            }, 1500);
-
-            setTimeout(function(){
-                $('.senator-elected').fadeOut(250);
-                $('.senator-discarding').fadeOut(250);
-                $('.senator-drawing').fadeOut(250);
-                $('.senators-drawing-left').fadeOut(250);
-                $('.senators-drawing-right').fadeOut(250);
-                $('#feedback').html('');
-            }, 2500);
-        }, i * 3000);
-        
-        if(i === senators.length-1){
-            return electors;
-        }
+    let chain = Promise.resolve();
+    
+    //for (let i = 0; i < senators.length; i++) {
+    for (let i = 0; i < 1; i++) {
+        //chain = chain.then(()=>animateSenator(senators[i]));
+        chain = chain.then(()=>outerDraw(senators[i]));
     }
+
+    return chain;
+}
+
+function outerDraw(senator) {
+    
+    return new Promise(resolve => {
+
+        let draw = null,
+        sequence = senator.split(' ')[1];
+
+        $('#' + senator.replace(' ', '-').toLowerCase()).fadeOut(500);
+
+        if(sequence % 2 === 0){
+            draw = drawBall('left');
+            $('.senators-drawing-left').fadeIn(speed, function(){
+                $('.senators-drawing-left').fadeOut(speed, function(){
+                    if(draw === 'gold'){
+                        return innerDraw(senator);
+                    }
+                    else {
+                        return disgard(senator);
+                    }
+                });
+            });
+        }
+        else {
+            draw = drawBall('right');
+            $('.senators-drawing-right').fadeIn(speed, function(){
+                $('.senators-drawing-right').fadeOut(speed, function(){
+                    if(draw === 'gold'){
+                        return innerDraw(senator);
+                    }
+                    else {
+                        return disgard(senator);
+                    }
+                });
+            });
+        }
+    });
+}
+
+function innerDraw(senator) {
+    return new Promise(resolve => {
+        $('.senator-drawing').fadeIn(speed, function(){
+            if(drawBall('center') === 'gold'){
+                $('.senator-drawing').fadeOut(speed, function(){
+                    return elected(senator);
+                });
+            }
+            else {
+                $('.senator-drawing').fadeOut(speed, function(){
+                    return disgard(senator);
+                });
+            }
+        });
+    });
+}
+
+function elected(senator) {
+    return new Promise(resolve => {
+        $('.senator-elected').fadeIn(speed, function(){
+            $('.senator-elected').fadeOut(speed);
+            electors.push(senator);
+            resolve();
+        });
+    });
+}
+
+function disgard(senator) {
+    return new Promise(resolve => {
+        $('.senator-discarding').fadeIn(speed, function(){
+            $('#' + senator.replace(' ', '-').toLowerCase()).fadeIn(speed);
+            $('.senator-discarding').fadeOut(speed, resolve());
+        });
+    });
+}
+
+function Wait() {
+    return new Promise(resolve => setTimeout(resolve, 1000));
 }
 
 function mixBalls(urns){

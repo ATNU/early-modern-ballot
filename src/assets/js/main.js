@@ -146,19 +146,19 @@ window.onload = function() {
 
     window.timer = 0;
 
-    let electors = Lot(offices, senators);
+    Lot(offices, senators).then(function(data){
+        console.log(data);
+    });
 
-    setInterval(function(){
+    // setInterval(function(){
 
-        console.log(electors);
+    //     let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
 
-        let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
+    //     setInterval(function(){
+    //         let result = Suffrage(nominations, senators);
+    //     }, 30000);
 
-        setInterval(function(){
-            let result = Suffrage(nominations, senators);
-        }, 30000);
-
-    }, 200000);
+    // }, 600000);
 
     
 };
