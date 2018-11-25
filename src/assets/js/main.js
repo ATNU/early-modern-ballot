@@ -145,8 +145,6 @@ window.onload = function() {
     }
 
     Lot(offices, senators).then(function(electors){
-        console.log(electors);
-
         Nomination(offices, _.chunk(_.shuffle(electors), offices.length)).then(function(nominations){
             console.log(nominations);
 

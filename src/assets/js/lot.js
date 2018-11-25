@@ -7,7 +7,7 @@ let centerUrn,
     leftUrn,
     rightUrn,
     electors = [],
-    speed = 10;
+    speed = 0;
 
 export default function Lot(offices, senators) {
 
@@ -36,6 +36,13 @@ export default function Lot(offices, senators) {
     mixBalls(urns);
 
     let chain = Promise.resolve();
+
+    chain = chain.then(function(){
+        $('#feedback').html('<p>Drawing Lots</p>');
+        return new Promise(resolve => {
+            setTimeout(resolve, speed*2);
+        });
+    });
     
     for (let i = 0; i < senators.length; i++) {
         chain = chain.then(function(){
