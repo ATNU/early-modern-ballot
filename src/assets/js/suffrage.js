@@ -1,6 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
+import $ from 'jquery';
 
 function getGetOrdinal(n) {
     var s=['th','st','nd','rd'],
@@ -10,9 +11,17 @@ function getGetOrdinal(n) {
 
 export default function Suffrage(nominations, senators) {
 
-    let results = {};
+    let results = {},
+        speed = 10;
 
     let chain = Promise.resolve();
+
+    chain = chain.then(function(){
+        $('#feedback').html('<p>Suffrage</p>');
+        return new Promise(resolve => {
+            setTimeout(resolve, speed*2);
+        });
+    });
 
     Object.keys(nominations).forEach(function(office){
 
@@ -61,7 +70,11 @@ export default function Suffrage(nominations, senators) {
                 //for each office add the name of the senator who won the vote
                 results[office] = _.orderBy(officeResults, 'yes', 'desc')[0].name;
 
-                resolve();
+                $('#feedback').html('<p>' + _.orderBy(officeResults, 'yes', 'desc')[0].name + ' nominated for ' + office + '</p>');
+                        
+                setTimeout(function(){  
+                    resolve();
+                }, speed*2);
             });
         });
     });
