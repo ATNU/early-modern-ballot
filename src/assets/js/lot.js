@@ -7,11 +7,11 @@ let centerUrn,
     leftUrn,
     rightUrn,
     electors = [],
-    speed = 3000;
+    speed = 10;
 
 export default function Lot(offices, senators) {
 
-    let centerUrn = {
+    centerUrn = {
         goldBalls: 4 * offices.length,
         silverBalls: 50 - (4 * offices.length)
     };
@@ -33,18 +33,21 @@ export default function Lot(offices, senators) {
 
     let smallLot = ['inner-top', 'inner-bottom', 'outer-top', 'outer-bottom'];
 
-    let electors = [],
-        interval = 0;
-
     mixBalls(urns);
 
     let chain = Promise.resolve();
     
-    //for (let i = 0; i < senators.length; i++) {
-    for (let i = 0; i < 1; i++) {
-        //chain = chain.then(()=>animateSenator(senators[i]));
-        chain = chain.then(()=>outerDraw(senators[i]));
+    for (let i = 0; i < senators.length; i++) {
+        chain = chain.then(function(){
+            return outerDraw(senators[i]);
+        });
     }
+
+    chain = chain.then(function(){
+        return new Promise(resolve => {
+            resolve(electors);
+        });
+    });
 
     return chain;
 }
@@ -63,10 +66,10 @@ function outerDraw(senator) {
             $('.senators-drawing-left').fadeIn(speed, function(){
                 $('.senators-drawing-left').fadeOut(speed, function(){
                     if(draw === 'gold'){
-                        return innerDraw(senator);
+                        resolve(innerDraw(senator));
                     }
                     else {
-                        return disgard(senator);
+                        resolve(disgard(senator));
                     }
                 });
             });
@@ -76,10 +79,10 @@ function outerDraw(senator) {
             $('.senators-drawing-right').fadeIn(speed, function(){
                 $('.senators-drawing-right').fadeOut(speed, function(){
                     if(draw === 'gold'){
-                        return innerDraw(senator);
+                        resolve(innerDraw(senator));
                     }
                     else {
-                        return disgard(senator);
+                        resolve(disgard(senator));
                     }
                 });
             });
@@ -92,12 +95,12 @@ function innerDraw(senator) {
         $('.senator-drawing').fadeIn(speed, function(){
             if(drawBall('center') === 'gold'){
                 $('.senator-drawing').fadeOut(speed, function(){
-                    return elected(senator);
+                    resolve(elected(senator));
                 });
             }
             else {
                 $('.senator-drawing').fadeOut(speed, function(){
-                    return disgard(senator);
+                    resolve(disgard(senator));
                 });
             }
         });
@@ -107,9 +110,10 @@ function innerDraw(senator) {
 function elected(senator) {
     return new Promise(resolve => {
         $('.senator-elected').fadeIn(speed, function(){
-            $('.senator-elected').fadeOut(speed);
-            electors.push(senator);
-            resolve();
+            $('.senator-elected').fadeOut(speed, function(){
+                electors.push(senator);
+                resolve();
+            });
         });
     });
 }
@@ -117,8 +121,9 @@ function elected(senator) {
 function disgard(senator) {
     return new Promise(resolve => {
         $('.senator-discarding').fadeIn(speed, function(){
-            $('#' + senator.replace(' ', '-').toLowerCase()).fadeIn(speed);
-            $('.senator-discarding').fadeOut(speed, resolve());
+            $('#' + senator.replace(' ', '-').toLowerCase()).fadeIn(speed, function(){
+                $('.senator-discarding').fadeOut(speed, resolve());
+            });
         });
     });
 }
