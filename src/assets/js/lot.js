@@ -44,6 +44,7 @@ export default function Lot(offices, senators) {
     }
 
     chain = chain.then(function(){
+        $('#feedback').html(null);
         return new Promise(resolve => {
             resolve(electors);
         });
@@ -64,7 +65,9 @@ function outerDraw(senator) {
         if(sequence % 2 === 0){
             draw = drawBall('left');
             $('.senators-drawing-left').fadeIn(speed, function(){
+                $('#feedback').html('<p>' + senator + ' drew a ' + draw + ' ball from the left urn.</p>');
                 $('.senators-drawing-left').fadeOut(speed, function(){
+
                     if(draw === 'gold'){
                         resolve(innerDraw(senator));
                     }
@@ -77,6 +80,7 @@ function outerDraw(senator) {
         else {
             draw = drawBall('right');
             $('.senators-drawing-right').fadeIn(speed, function(){
+                $('#feedback').html('<p>' + senator + ' drew a ' + draw + ' ball from the right urn.</p>');
                 $('.senators-drawing-right').fadeOut(speed, function(){
                     if(draw === 'gold'){
                         resolve(innerDraw(senator));
@@ -94,11 +98,13 @@ function innerDraw(senator) {
     return new Promise(resolve => {
         $('.senator-drawing').fadeIn(speed, function(){
             if(drawBall('center') === 'gold'){
+                $('#feedback').html('<p>' + senator + ' drew a gold ball from the center urn and is chosen as an elector.</p>');
                 $('.senator-drawing').fadeOut(speed, function(){
                     resolve(elected(senator));
                 });
             }
             else {
+                $('#feedback').html('<p>' + senator + ' drew a silver ball from the center urn and returns to their seat.</p>');
                 $('.senator-drawing').fadeOut(speed, function(){
                     resolve(disgard(senator));
                 });
