@@ -144,21 +144,16 @@ window.onload = function() {
         $('#benches').append(senatorDiv);
     }
 
-    window.timer = 0;
+    Lot(offices, senators).then(function(electors){
+        console.log(electors);
 
-    Lot(offices, senators).then(function(data){
-        console.log(data);
+        Nomination(offices, _.chunk(_.shuffle(electors), offices.length)).then(function(nominations){
+            console.log(nominations);
+
+            Suffrage(nominations, senators).then(function(results){
+                console.log(results);
+            });
+        });
+
     });
-
-    // setInterval(function(){
-
-    //     let nominations = Nomination(offices, _.chunk(_.shuffle(electors), offices.length));
-
-    //     setInterval(function(){
-    //         let result = Suffrage(nominations, senators);
-    //     }, 30000);
-
-    // }, 600000);
-
-    
 };

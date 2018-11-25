@@ -11,40 +11,54 @@ export default function Nomination(offices, orders) {
         nominations[office] = [];
     });
 
+    let chain = Promise.resolve();
+
     //loop over each order of electors
-    orders.forEach(function(electors){
+    for (let i = 0; i < orders.length; i++) {
         //loop over each elector in the order
 
-        //list of senators already nominated in this order
-        let nominated = [];
+        chain = chain.then(function(){
 
-        electors.forEach(function(elector, index){
+            return new Promise(resolve => {
+                //list of senators already nominated in this order
+                let nominated = [],
+                    electors = orders[i];
 
-            let nominationComplete = false;
+                electors.forEach(function(elector, index){
 
-            //remove current elector from pool of potential nominees
-            let potentialNominees = electors.slice(0);
-            _.pull(potentialNominees, elector);
+                    let nominationComplete = false;
 
-            //remove previously nominated electors from pool of potential nominees
-            let nominees = _.difference(potentialNominees, nominated);
+                    //remove current elector from pool of potential nominees
+                    let potentialNominees = electors.slice(0);
+                    _.pull(potentialNominees, elector);
 
-            do {
-                //nominate a senator
-                let nominee = nominees.pop();
+                    //remove previously nominated electors from pool of potential nominees
+                    let nominees = _.difference(potentialNominees, nominated);
 
-                //Randomly choose to accept nomination or not
-                if(nominees.length === 0 || _.sample([true, false])){
-                    nominations[offices[index]].push(nominee);
-                    nominated.push(nominee);
+                    do {
+                        //nominate a senator
+                        let nominee = nominees.pop();
 
-                    nominationComplete = true;
-                }
-            }
-            while(!nominationComplete)
+                        //Randomly choose to accept nomination or not
+                        if(nominees.length === 0 || _.sample([true, false])){
+                            nominations[offices[index]].push(nominee);
+                            nominated.push(nominee);
+                            nominationComplete = true;
+                            resolve();
+                        }
+                    }
+                    while(!nominationComplete);
+                });
+            });
+        });
+    }
+
+    //return all nominations
+    chain = chain.then(function(){
+        return new Promise(resolve => {
+            resolve(nominations);
         });
     });
 
-    //return all nominations
-    return nominations;
+    return chain;
 }
