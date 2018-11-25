@@ -12,51 +12,67 @@ export default function Suffrage(nominations, senators) {
 
     let results = {};
 
-    Object.keys(nominations).forEach(function(office, index){
+    let chain = Promise.resolve();
 
-        let officeResults = [];
+    Object.keys(nominations).forEach(function(office){
 
-        nominations[office].forEach(function(candidate, index){
-            //console.log(candidate + ' to be ' + office + ' in the ' + getGetOrdinal(index+1) + ' order.');
+        chain = chain.then(function(){
 
-            let pages = [];
-            let votes = {
-                name: candidate,
-                yes: 0,
-                no: 0
-            };
+            return new Promise(resolve => {
 
-            for(let i=0; i<8; i++){
-                pages[i] = {
-                    name: candidate,
-                    yes: 0,
-                    no: 0
-                };
-            }
+                let officeResults = [];
 
-            //page 1 ballots A & B
-            pages[0] = ballot(pages[0], ['A', 'B']);
+                nominations[office].forEach(function(candidate){
+                    //console.log(candidate + ' to be ' + office + ' in the ' + getGetOrdinal(index+1) + ' order.');
+        
+                    let pages = [];
+                    let votes = {
+                        name: candidate,
+                        yes: 0,
+                        no: 0
+                    };
+        
+                    for(let i=0; i<8; i++){
+                        pages[i] = {
+                            name: candidate,
+                            yes: 0,
+                            no: 0
+                        };
+                    }
+        
+                    //page 1 ballots A & B
+                    pages[0] = ballot(pages[0], ['A', 'B']);
+        
+                    //pages ballot each of the 8 benches of senators
+                    let benches = _.chunk(senators, (senators.length/8));
+        
+                    benches.forEach(function(bench, index){
+                        pages[index] = ballot(pages[index], bench);
+                    });
+        
+                    pages.forEach(function(page){
+                        votes = counting(page, votes);
+                    });
+        
+                    //Add the votes for each candidate to the results for this office
+                    officeResults.push(votes);
+                });
+        
+                //for each office add the name of the senator who won the vote
+                results[office] = _.orderBy(officeResults, 'yes', 'desc')[0].name;
 
-            //pages ballot each of the 8 benches of senators
-            let benches = _.chunk(senators, (senators.length/8));
-
-            benches.forEach(function(bench, index){
-                pages[index] = ballot(pages[index], bench);
+                resolve();
             });
-
-            pages.forEach(function(page){
-                votes = counting(page, votes);
-            });
-
-            //Add the votes for each candidate to the results for this office
-            officeResults.push(votes);
         });
-
-        //for each office add the name of the senator who won the vote
-        results[office] = _.orderBy(officeResults, 'yes', 'desc')[0].name;
     });
 
-    return results;
+    chain = chain.then(function(){
+        return new Promise(resolve => {
+            resolve(results);
+        });
+    });
+
+    return chain;
 }
 
 function ballot(page, electorate){
