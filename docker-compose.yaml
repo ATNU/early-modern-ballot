@@ -1,0 +1,14 @@
+version: "3"
+services:
+  client:
+    image: atnu-early-modern-ballot
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3100:80"
+    networks:
+      - early-modern-ballot
+
+networks:
+  early-modern-ballot:
