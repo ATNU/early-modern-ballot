@@ -7,7 +7,7 @@ export default function Nomination(offices, orders) {
 
     let nominations = {},
         intervalId,
-        speed = 10;
+        speed = 500;
 
     //create empty object to hold nominations
     offices.forEach(function(office){

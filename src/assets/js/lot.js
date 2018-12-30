@@ -7,7 +7,7 @@ let centerUrn,
     leftUrn,
     rightUrn,
     electors = [],
-    speed = 0;
+    speed = 500;
 
 export default function Lot(offices, senators) {
 
