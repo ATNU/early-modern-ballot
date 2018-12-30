@@ -1,3 +1,13 @@
+FROM node:8 as builder
+
+WORKDIR /usr/local/app
+
+COPY ./src .
+
+RUN npm install
+RUN npm rebuild node-sass
+RUN npm run build
+
 FROM nginx
 
-COPY dist /usr/share/nginx/html
+COPY --from=builder /usr/local/app/dist /usr/share/nginx/html
