@@ -2,7 +2,7 @@ FROM node:8 as builder
 
 WORKDIR /usr/local/app
 
-COPY ./src .
+COPY . .
 
 RUN npm install
 RUN npm rebuild node-sass
