@@ -1,11 +1,26 @@
+html {
+  font-size: 100% !important;
+}
+
 a {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
 
+.slider {
+  margin: 10px;
+
+  .slider-selection {
+    background-color: #337ab7;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #337ab7), to(#2e6da4));
+    background-image: linear-gradient(to bottom, #337ab7 0, #2e6da4 100%);
+    background-repeat: repeat-x;
+  }
+}
+
 #background {
-  margin: 12px auto;
+  margin: 70px auto 15px;
   width: 704px;
   height: 1000px;
   position: relative;

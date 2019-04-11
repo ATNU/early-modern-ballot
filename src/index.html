@@ -16,6 +16,44 @@
 </head>
 
 <body>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Early Modern Ballot</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                  <ul class="navbar-nav mr-auto">
+                    <li id="play-button" class="nav-item d-block">
+                      <a class="nav-link" href="#" onclick="ballot.run()">Play</a>
+                    </li>
+                    <li id="pause-button" class="nav-item d-none">
+                      <a class="nav-link" href="#" onclick="ballot.pause()">Pause</a>
+                    </li>
+                    <li id="reset-button" class="nav-item">
+                      <a class="nav-link" href="#" onclick="ballot.reset()">Reset</a>
+                    </li>
+                    <li class="nav-item">
+                            <input
+                            id="speed-slider"
+                            type="text"
+                            name="somename"
+                            data-provide="slider"
+                            data-slider-min="1"
+                            data-slider-max="10"
+                            data-slider-step="1"
+                            data-slider-value="5"
+                            data-slider-tooltip="hide"
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                  </ul>
+                  <span class="navbar-text">
+                    Newcastle University
+                  </span>
+                </div>
+                </nav>
     <div id="background">
         <div id="benches"></div>
         <div id="characters">

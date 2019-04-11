@@ -9,14 +9,16 @@
 // }
 
 // import CSS
-// import animate_css from 'animate.css/animate.min.css';
+import bootstrap from 'bootstrap/scss/bootstrap.scss';
+import * as slide from 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
 import scss from '../css/sass.scss';
-
 
 // import Js Plugins/Entities
 
 //ES6 Module
 import $ from 'jquery';
+import modal from 'jquery-modal';
+import slider from 'bootstrap-slider';
 import _ from 'lodash';
 import Lot from './lot';
 import Nomination from './nomination';
@@ -106,6 +108,10 @@ window.h5 = {
 window.onload = function() {
     window.h5.init();
 
+    $('.slider').on('mouseup', function(){
+        window.ballot.setSpeed((11 - $('#speed-slider').val()) * 100);
+    });
+
     let offices = ['Strategus', 'Orator', '3rd commissioner of the Seal', '3rd commissioner of the Treasury', '1st Censor', '2nd Censor'],
         senators = [],
         side = 'right',
@@ -144,14 +150,55 @@ window.onload = function() {
         $('#benches').append(senatorDiv);
     }
 
-    Lot(offices, senators).then(function(electors){
-        Nomination(offices, _.chunk(_.shuffle(electors), offices.length)).then(function(nominations){
-            console.log(nominations);
+    window.ballot = {
+        isPaused: false,
+        speed: 500,
+        setSpeed: function(speed){
+            this.speed = speed;
+        },
+        getSpeed: function(){
+            return this.speed;
+        },
+        run: function(){
 
-            Suffrage(nominations, senators).then(function(results){
-                console.log(results);
-            });
-        });
+            $('#play-button').removeClass('d-block');
+            $('#play-button').addClass('d-none');
+            $('#pause-button').removeClass('d-none');
+            $('#pause-button').addClass('d-block');
 
-    });
+            if(this.isPaused){
+
+                console.log((11 - $('#speed-slider').val()) * 100);
+
+                this.isPaused = false;
+                this.setSpeed((11 - $('#speed-slider').val()) * 100);
+            }
+            else {
+                Lot(offices, senators).then(function(electors){
+                    Nomination(offices, _.chunk(_.shuffle(electors), offices.length)).then(function(nominations){
+                        console.log(nominations);
+            
+                        Suffrage(nominations, senators).then(function(results){
+                            console.log(results);
+                        });
+                    });
+            
+                });
+            }
+        },
+        pause: function(){
+
+            $('#play-button').removeClass('d-none');
+            $('#play-button').addClass('d-block');
+            $('#pause-button').removeClass('d-none');
+            $('#pause-button').addClass('d-block');
+
+            this.isPaused = true;
+
+            this.setSpeed(Number.MAX_SAFE_INTEGER);
+        },
+        reset: function(){
+            console.log('reset');
+        }
+    };
 };

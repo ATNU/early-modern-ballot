@@ -6,8 +6,7 @@ import $ from 'jquery';
 export default function Nomination(offices, orders) {
 
     let nominations = {},
-        intervalId,
-        speed = 500;
+        intervalId;
 
     //create empty object to hold nominations
     offices.forEach(function(office){
@@ -19,7 +18,7 @@ export default function Nomination(offices, orders) {
     chain = chain.then(function(){
         $('#feedback').html('<p>Nominations</p>');
         return new Promise(resolve => {
-            setTimeout(resolve, speed*2);
+            setTimeout(resolve, window.ballot.getSpeed()*2);
         });
     });
 
@@ -66,7 +65,7 @@ export default function Nomination(offices, orders) {
                         
                     setTimeout(function(){  
                         resolve();
-                    }, speed*2);
+                    }, window.ballot.getSpeed()*2);
                 });
             });
         });

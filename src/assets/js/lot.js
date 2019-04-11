@@ -6,8 +6,7 @@ import $ from 'jquery';
 let centerUrn,
     leftUrn,
     rightUrn,
-    electors = [],
-    speed = 500;
+    electors = [];
 
 export default function Lot(offices, senators) {
 
@@ -40,7 +39,7 @@ export default function Lot(offices, senators) {
     chain = chain.then(function(){
         $('#feedback').html('<p>Drawing Lots</p>');
         return new Promise(resolve => {
-            setTimeout(resolve, speed*2);
+            setTimeout(resolve, window.ballot.getSpeed()*2);
         });
     });
     
@@ -71,9 +70,9 @@ function outerDraw(senator) {
 
         if(sequence % 2 === 0){
             draw = drawBall('left');
-            $('.senators-drawing-left').fadeIn(speed, function(){
+            $('.senators-drawing-left').fadeIn(window.ballot.getSpeed(), function(){
                 $('#feedback').html('<p>' + senator + ' drew a ' + draw + ' ball from the left urn.</p>');
-                $('.senators-drawing-left').fadeOut(speed, function(){
+                $('.senators-drawing-left').fadeOut(window.ballot.getSpeed(), function(){
 
                     if(draw === 'gold'){
                         resolve(innerDraw(senator));
@@ -86,9 +85,9 @@ function outerDraw(senator) {
         }
         else {
             draw = drawBall('right');
-            $('.senators-drawing-right').fadeIn(speed, function(){
+            $('.senators-drawing-right').fadeIn(window.ballot.getSpeed(), function(){
                 $('#feedback').html('<p>' + senator + ' drew a ' + draw + ' ball from the right urn.</p>');
-                $('.senators-drawing-right').fadeOut(speed, function(){
+                $('.senators-drawing-right').fadeOut(window.ballot.getSpeed(), function(){
                     if(draw === 'gold'){
                         resolve(innerDraw(senator));
                     }
@@ -103,16 +102,16 @@ function outerDraw(senator) {
 
 function innerDraw(senator) {
     return new Promise(resolve => {
-        $('.senator-drawing').fadeIn(speed, function(){
+        $('.senator-drawing').fadeIn(window.ballot.getSpeed(), function(){
             if(drawBall('center') === 'gold'){
                 $('#feedback').html('<p>' + senator + ' drew a gold ball from the center urn and is chosen as an elector.</p>');
-                $('.senator-drawing').fadeOut(speed, function(){
+                $('.senator-drawing').fadeOut(window.ballot.getSpeed(), function(){
                     resolve(elected(senator));
                 });
             }
             else {
                 $('#feedback').html('<p>' + senator + ' drew a silver ball from the center urn and returns to their seat.</p>');
-                $('.senator-drawing').fadeOut(speed, function(){
+                $('.senator-drawing').fadeOut(window.ballot.getSpeed(), function(){
                     resolve(disgard(senator));
                 });
             }
@@ -122,8 +121,8 @@ function innerDraw(senator) {
 
 function elected(senator) {
     return new Promise(resolve => {
-        $('.senator-elected').fadeIn(speed, function(){
-            $('.senator-elected').fadeOut(speed, function(){
+        $('.senator-elected').fadeIn(window.ballot.getSpeed(), function(){
+            $('.senator-elected').fadeOut(window.ballot.getSpeed(), function(){
                 electors.push(senator);
                 resolve();
             });
@@ -133,9 +132,9 @@ function elected(senator) {
 
 function disgard(senator) {
     return new Promise(resolve => {
-        $('.senator-discarding').fadeIn(speed, function(){
-            $('#' + senator.replace(' ', '-').toLowerCase()).fadeIn(speed, function(){
-                $('.senator-discarding').fadeOut(speed, resolve());
+        $('.senator-discarding').fadeIn(window.ballot.getSpeed(), function(){
+            $('#' + senator.replace(' ', '-').toLowerCase()).fadeIn(window.ballot.getSpeed(), function(){
+                $('.senator-discarding').fadeOut(window.ballot.getSpeed(), resolve());
             });
         });
     });

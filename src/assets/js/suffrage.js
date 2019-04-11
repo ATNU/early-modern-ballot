@@ -11,15 +11,14 @@ function getGetOrdinal(n) {
 
 export default function Suffrage(nominations, senators) {
 
-    let results = {},
-        speed = 10;
+    let results = {};
 
     let chain = Promise.resolve();
 
     chain = chain.then(function(){
         $('#feedback').html('<p>Suffrage</p>');
         return new Promise(resolve => {
-            setTimeout(resolve, speed*2);
+            setTimeout(resolve, window.ballot.getSpeed()*2);
         });
     });
 
@@ -74,7 +73,7 @@ export default function Suffrage(nominations, senators) {
                         
                 setTimeout(function(){  
                     resolve();
-                }, speed*2);
+                }, window.ballot.getSpeed()*2);
             });
         });
     });
