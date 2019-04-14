@@ -24,6 +24,13 @@ import Lot from './lot';
 import Nomination from './nomination';
 import Suffrage from './suffrage';
 
+
+let offices,
+    senators,
+    side,
+    row,
+    seat;
+
 window.h5 = {
     isPc: function() {
         var userAgentInfo = navigator.userAgent;
@@ -112,93 +119,113 @@ window.onload = function() {
         window.ballot.setSpeed((11 - $('#speed-slider').val()) * 100);
     });
 
-    let offices = ['Strategus', 'Orator', '3rd commissioner of the Seal', '3rd commissioner of the Treasury', '1st Censor', '2nd Censor'],
-        senators = [],
-        side = 'right',
-        row = 'row-4',
-        seat = 312;
+    window.ballot.init();
+};
 
-    for(let i=0; i<200; i++){
+window.ballot = {
+    isPaused: false,
+    speed: 500,
+    results: {},
+    nominations: {},
+    electors: {},
+    setSpeed: function(speed){
+        this.speed = speed;
+    },
+    getSpeed: function(){
+        return this.speed;
+    },
+    run: function(){
 
-        if(i % 2 === 0){
-            side = 'left';
+        $('#play-button').removeClass('d-block');
+        $('#play-button').addClass('d-none');
+        $('#stop-button').removeClass('d-none');
+        $('#stop-button').addClass('d-block');
+
+        if(this.isPaused){
+            this.isPaused = false;
+            this.setSpeed((11 - $('#speed-slider').val()) * 100);
         }
         else {
-            seat = seat + 16;
-            side = 'right';
+            Lot(offices, senators).then(function(electors){
+                window.ballot.electors = electors;
+                Nomination(offices, _.chunk(_.shuffle(electors), offices.length)).then(function(nominations){
+                    window.ballot.nominations = nominations;
+                    Suffrage(nominations, senators).then(function(results){
+                        window.ballot.results = results;
+
+                        console.group('Results');
+                        console.info(window.ballot.electors);
+                        console.info(window.ballot.nominations);
+                        console.info(window.ballot.results);
+                        console.groupEnd();
+
+                        let html = '';
+
+                        Object.keys(window.ballot.nominations).forEach(function(office){
+                            html += '<tr><th scope="row">' + office + '</th>';
+
+                            window.ballot.nominations[office].forEach(function(nominee){
+                                if(nominee === window.ballot.results[office]){
+                                    html += '<td><strong>' + nominee +  '</strong></td>';
+                                }
+                                else {
+                                    html += '<td>' + nominee +  '</td>';
+                                }
+                                
+                            });
+
+                            html += '</tr>';
+                        });
+
+                        $('#results-grid').html(html);
+
+                        $('#results-modal').modal('show');
+                    });
+                });
+        
+            });
         }
+    },
+    stop: function(){
+        window.location.reload();
+    },
+    init: function(){
+        offices = ['Strategus', 'Orator', '3rd commissioner of the Seal', '3rd commissioner of the Treasury', '1st Censor', '2nd Censor'];
+        senators = [];
+        side = 'right';
+        row = 'row-4';
+        seat = 312;
 
-        if(i === 50){
-            row = 'row-3';
-            seat = 308;
-        }
+        for(let i=0; i<200; i++){
 
-        if(i === 100){
-            row = 'row-2';
-            seat = 302;
-        }
-
-        if(i === 150 ){
-            row = 'row-1';
-            seat = 308;
-        } 
-
-        senators.push('Senator ' + i);
-
-        let senatorDiv = '<div id="senator-' + i + '" class="benched-senator ' + row + ' ' + side + '" style="top: ' + seat + 'px"></div>';
-
-        $('#benches').append(senatorDiv);
-    }
-
-    window.ballot = {
-        isPaused: false,
-        speed: 500,
-        setSpeed: function(speed){
-            this.speed = speed;
-        },
-        getSpeed: function(){
-            return this.speed;
-        },
-        run: function(){
-
-            $('#play-button').removeClass('d-block');
-            $('#play-button').addClass('d-none');
-            $('#pause-button').removeClass('d-none');
-            $('#pause-button').addClass('d-block');
-
-            if(this.isPaused){
-
-                console.log((11 - $('#speed-slider').val()) * 100);
-
-                this.isPaused = false;
-                this.setSpeed((11 - $('#speed-slider').val()) * 100);
+            if(i % 2 === 0){
+                side = 'left';
             }
             else {
-                Lot(offices, senators).then(function(electors){
-                    Nomination(offices, _.chunk(_.shuffle(electors), offices.length)).then(function(nominations){
-                        console.log(nominations);
-            
-                        Suffrage(nominations, senators).then(function(results){
-                            console.log(results);
-                        });
-                    });
-            
-                });
+                seat = seat + 16;
+                side = 'right';
             }
-        },
-        pause: function(){
 
-            $('#play-button').removeClass('d-none');
-            $('#play-button').addClass('d-block');
-            $('#pause-button').removeClass('d-none');
-            $('#pause-button').addClass('d-block');
+            if(i === 50){
+                row = 'row-3';
+                seat = 308;
+            }
 
-            this.isPaused = true;
+            if(i === 100){
+                row = 'row-2';
+                seat = 302;
+            }
 
-            this.setSpeed(Number.MAX_SAFE_INTEGER);
-        },
-        reset: function(){
-            console.log('reset');
+            if(i === 150 ){
+                row = 'row-1';
+                seat = 308;
+            } 
+
+            senators.push('Senator ' + i);
+
+            let senatorDiv = '<div id="senator-' + i + '" class="benched-senator ' + row + ' ' + side + '" style="top: ' + seat + 'px"></div>';
+
+            $('#benches').append(senatorDiv);
         }
-    };
+    }
 };

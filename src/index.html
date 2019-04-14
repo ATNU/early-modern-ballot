@@ -26,11 +26,8 @@
                     <li id="play-button" class="nav-item d-block">
                       <a class="nav-link" href="#" onclick="ballot.run()">Play</a>
                     </li>
-                    <li id="pause-button" class="nav-item d-none">
-                      <a class="nav-link" href="#" onclick="ballot.pause()">Pause</a>
-                    </li>
-                    <li id="reset-button" class="nav-item">
-                      <a class="nav-link" href="#" onclick="ballot.reset()">Reset</a>
+                    <li id="stop-button" class="nav-item d-none">
+                      <a class="nav-link" href="#" onclick="ballot.stop()">Stop</a>
                     </li>
                     <li class="nav-item">
                             <input
@@ -39,7 +36,7 @@
                             name="somename"
                             data-provide="slider"
                             data-slider-min="1"
-                            data-slider-max="10"
+                            data-slider-max="100"
                             data-slider-step="1"
                             data-slider-value="5"
                             data-slider-tooltip="hide"
@@ -93,6 +90,34 @@
         <div id="feedback">
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="results-modal">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Results</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                <th scope="col">Office</th>
+                                <th scope="col" colspan="4">Nominees</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-grid">
+                                
+                            </tbody>
+                            </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 </body>
 
 </html>

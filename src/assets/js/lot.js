@@ -6,9 +6,11 @@ import $ from 'jquery';
 let centerUrn,
     leftUrn,
     rightUrn,
-    electors = [];
+    electors;
 
 export default function Lot(offices, senators) {
+
+    electors = [];
 
     centerUrn = {
         goldBalls: 4 * offices.length,
