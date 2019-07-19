@@ -29,6 +29,10 @@ jobs:
       - run: npm install
       - run: npm rebuild node-sass
       - run: npm run build
+
+      - setup_remote_docker:
+                docker_layer_caching:
+
       - run: |
           docker build -t rsenu.azurecr.io/early-modern-ballot:$CIRCLE_SHA1 .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
