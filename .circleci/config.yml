@@ -35,7 +35,7 @@ jobs:
 
       - run: |
           docker build -t rsenu.azurecr.io/early-modern-ballot:$CIRCLE_SHA1 .
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker login -u $DOCKER_USER -p $DOCKER_PASS rsenu.azurecr.io
           docker push rsenu.azurecr.io/early-modern-ballot:$CIRCLE_SHA1
 
       - save_cache:
