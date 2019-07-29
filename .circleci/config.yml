@@ -23,7 +23,7 @@ jobs:
 
       - run: |
           docker build -t rsenuacr.azurecr.io/early-modern-ballot:latest -t rsenuacr.azurecr.io/early-modern-ballot:$CIRCLE_SHA1 .
-          docker login -u $DOCKER_USER -p $DOCKER_PASS rsenu.azurecr.io
+          docker login -u $DOCKER_USER -p $DOCKER_PASS rsenuacr.azurecr.io
           docker push rsenuacr.azurecr.io/early-modern-ballot:latest
           docker push rsenuacr.azurecr.io/early-modern-ballot:$CIRCLE_SHA1
 
