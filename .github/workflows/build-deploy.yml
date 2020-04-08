@@ -1,0 +1,22 @@
+# This workflow will do a clean install of python dependencies, run tests, build the docker images and deploy to Azure Container Instances
+
+name: Build & Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        registry: atnuregistry.azurecr.io
+        name: atnuregistry.azurecr.io/early-modern-ballot
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        tag_semver: true
