@@ -36,7 +36,7 @@
     "bluebird": "^3.5.4",
     "bootstrap": "^4.3.1",
     "bootstrap-slider": "^10.6.1",
-    "gsap": "^1.20.3",
+    "gsap": "^3.6.0",
     "howler": "^2.0.5",
     "jquery": "3.3.1",
     "jquery-modal": "^0.9.2",
